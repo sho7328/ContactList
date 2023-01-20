@@ -67,8 +67,14 @@ public class ContactList
         String fn = input.nextLine();
         System.out.println("Last Name: ");
         String ln = input.nextLine();
-        System.out.println("Phone Number: ");
+        System.out.println("Phone Number (must be 10 digits long): ");
         String pn = input.nextLine();
+        // Make sure the length of the phone number is 10 digits.
+        while(pn.length() !=10)
+        {
+            System.out.println("Phone Number (must be 10 digits long): ");
+            pn = input.nextLine();
+        }
         // Make a student and add to contacts
         if (choice.equals("1"))
         {
