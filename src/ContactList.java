@@ -24,12 +24,13 @@ public class ContactList
     // Create a scanner to take in user input.
     Scanner input = new Scanner(System.in);
 
-    // TODO: Write a Constructor
+    // The ContactList constructor defines the ArrayList "contacts".
     public ContactList()
     {
         contacts = new ArrayList<Person>();
     }
 
+    // printMenuOptions prints the options the user has for this program.
     public void printMenuOptions() {
         System.out.println("Menu: ");
         System.out.println("1. Add Contact");
@@ -43,13 +44,10 @@ public class ContactList
         System.out.println("0. Exit");
     }
 
-    /**
-     * Asks user for input to create and add a new Person
-     * to the contact list
-     */
+    // addContact adds either a student's contact or a composer's contact to the contact list
+    // by asking for contact info (name, number, musical era / grade)
     public void addContact() {
-        // TODO: Complete the addContact method
-        // Ask user for what contact to make
+        // Ask user for which type of contact to make
         System.out.println("Select a type of contact to add:");
         System.out.println("1. Student");
         System.out.println("2. Composer");
@@ -63,6 +61,7 @@ public class ContactList
             System.out.println("2. Composer");
             choice = input.nextLine();
         }
+        // Ask for the contact's name and number.
         System.out.println("Please fill in the following information.");
         System.out.println("First Name: ");
         String fn = input.nextLine();
@@ -73,27 +72,28 @@ public class ContactList
         // Make a student and add to contacts
         if (choice.equals("1"))
         {
+            // Ask for the student's grade.
             System.out.println("Grade: ");
             int grade = input.nextInt();
             input.nextLine();
+            // Create a new student and add it to the ArrayList contacts.
             Person p = new Student(fn, ln, pn, grade);
             contacts.add(p);
         }
         // Make a composer and add to contacts
         else if(choice.equals("2"))
         {
+            // Ask for the musical era of the composer.
             System.out.println("Musical Era (Baroque, Classical, Early Romantic, Late Romantic, Contemporary): ");
             String era = input.nextLine();
+            // Create a new composer and add it to the contact list.
             Person c = new Composer(fn, ln, pn, era);
             contacts.add(c);
         }
     }
 
-    /**
-     * Loops through and prints all contacts
-     */
+    // printContacts prints all the contacts and their info in the contact list.
     public void printContacts() {
-        // TODO: Complete the printContacts method
         for(int i = 0; i < contacts.size(); i++)
         {
             System.out.println(contacts.get(i));
@@ -105,9 +105,8 @@ public class ContactList
      * lastName, or phoneNumber
      * @param sortBy: 0=firstName, 1=lastName, 2=phoneNumber
      */
+    // The sort method bubble sorts the list of contacts by either first name, last name, or phone number.
     public void sort(int sortBy) {
-        // TODO: Complete the sort method
-
         int n = contacts.size();
         // Sort contacts by first name
         if(sortBy == 0)
@@ -116,9 +115,10 @@ public class ContactList
             {
                 for(int comp = 0; comp < n - pass; comp++)
                 {
+                    // If the earlier first name is later in the alphabet than the later first name, swap them.
                     if (contacts.get(comp).getFirstName().compareToIgnoreCase(contacts.get(comp + 1).getFirstName()) > 0)
                     {
-                        //swap the bigger element with the smaller element
+                        //swap the bigger element with the smaller element to create the correct order.
                         Person bigger = contacts.get(comp);
                         Person smaller = contacts.get(comp + 1);
                         contacts.set(comp, smaller);
@@ -134,6 +134,7 @@ public class ContactList
             {
                 for(int comp = 0; comp < n - pass; comp++)
                 {
+                    // If the earlier last name is later in the alphabet than the later last name, swap them.
                     if (contacts.get(comp).getLastName().compareToIgnoreCase(contacts.get(comp + 1).getLastName()) > 0)
                     {
                         //swap the bigger element with the smaller element
@@ -152,6 +153,7 @@ public class ContactList
             {
                 for(int comp = 0; comp < n - pass; comp++)
                 {
+                    // If the earlier phone number is greater than the later phone number, swap them.
                     if (contacts.get(comp).getPhoneNumber().compareToIgnoreCase(contacts.get(comp + 1).getPhoneNumber()) > 0)
                     {
                         //swap the bigger element with the smaller element
@@ -165,7 +167,7 @@ public class ContactList
         }
     }
 
-    // TODO: Write searchByFirstName
+    // This method takes in user input to search for a contact by their first name.
     public Person searchByFirstName(String firstName)
     {
         // Traverse contacts to find the match for the first name
@@ -181,7 +183,7 @@ public class ContactList
         return null;
     }
 
-    // TODO: Write searchByLastName
+    // This method takes in user input to search for a contact by their last name.
     public Person searchByLastName(String lastName)
     {
         // Traverse contacts to find the match for the last name
@@ -197,7 +199,7 @@ public class ContactList
         return null;
     }
 
-    // TODO: Write searchByPhoneNumber
+    // This method takes in user input to search for a contact by their number.
     public Person searchByPhoneNumber(String phoneNumber)
     {
         // Traverse contacts to find the match for the phone number
@@ -213,15 +215,13 @@ public class ContactList
         return null;
     }
 
-    /**
-     * Lists just the Student objects in the Contact List
-     */
+    // This method lists all the contacts that are students.
     public void listStudents()
     {
-        // TODO: Complete the listStudents method
+        // Traverse the list of contacts.
         for(int i = 0 ; i < contacts.size(); i++)
         {
-            // If the contact is a student, print them out.
+            // If the contact is a student, print their contact info out.
             if(contacts.get(i) instanceof Student)
             {
                 System.out.println(contacts.get(i));
@@ -229,43 +229,40 @@ public class ContactList
         }
     }
 
-    /**
-     * Loops providing menu options to the user
-     * until the user exits
-     */
+    // This method prints the menu and depending on user input, runs each method.
     public void run() {
         System.out.println("Welcome to your Contacts List");
         System.out.println("Please pick from the following menu options");
         printMenuOptions();
-        // TODO: Complete the run method
 
         String num = input.nextLine();
+        // While the user doesn't choose to exit the code:
         while(!num.equals("0"))
         {
-            // If the user enters 1, run addContact
+            // If the user enters 1, run addContact, which adds a new contact to the contact list.
             if(num.equals("1"))
             {
                 addContact();
             }
-            // If user enters 2, list contacts by first name
+            // If user enters 2, list all contacts by first name order.
             else if(num.equals("2"))
             {
                 sort(0);
                 printContacts();
             }
-            // If user enters 3, list contacts by last name
+            // If user enters 3, list all contacts by last name order.
             else if(num.equals("3"))
             {
                 sort(1);
                 printContacts();
             }
-            // If user enters 4, list contacts by phone number
+            // If user enters 4, list all contacts by phone number order.
             else if(num.equals("4"))
             {
                 sort(2);
                 printContacts();
             }
-            // If user enters 5, list all students
+            // If user enters 5, list all students that are in the contact list.
             else if(num.equals("5"))
             {
                 listStudents();
@@ -321,14 +318,17 @@ public class ContactList
                     System.out.println(searchByPhoneNumber(pn));
                 }
             }
+            // Reprint the menu so the user doesn't have to scroll up to look at it again.
             printMenuOptions();
+            // Update the value of the user's input.
             num = input.nextLine();
         }
     }
 
-
+    // Run the whole program.
     public static void main(String[] args)
     {
+        // Create a ContactList object and run the program.
         ContactList cl = new ContactList();
         cl.run();
     }
